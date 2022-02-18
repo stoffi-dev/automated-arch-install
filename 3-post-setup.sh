@@ -1,21 +1,14 @@
 #!/usr/bin/env bash
 echo -ne "
 -------------------------------------------------------------------------
-   █████╗ ██████╗  ██████╗██╗  ██╗████████╗██╗████████╗██╗   ██╗███████╗
-  ██╔══██╗██╔══██╗██╔════╝██║  ██║╚══██╔══╝██║╚══██╔══╝██║   ██║██╔════╝
-  ███████║██████╔╝██║     ███████║   ██║   ██║   ██║   ██║   ██║███████╗
-  ██╔══██║██╔══██╗██║     ██╔══██║   ██║   ██║   ██║   ██║   ██║╚════██║
-  ██║  ██║██║  ██║╚██████╗██║  ██║   ██║   ██║   ██║   ╚██████╔╝███████║
-  ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝   ╚═╝   ╚═╝   ╚═╝    ╚═════╝ ╚══════╝
--------------------------------------------------------------------------
                     Automated Arch Linux Installer
-                        SCRIPTHOME: ArchTitus
+                        SCRIPTHOME: automated-arch-install
 -------------------------------------------------------------------------
 
 Final Setup and Configurations
 GRUB EFI Bootloader Install & Check
 "
-source /root/ArchTitus/setup.conf
+source /root/automated-arch-install/setup.conf
 genfstab -U / >> /etc/fstab
 if [[ -d "/sys/firmware/efi" ]]; then
     grub-install --efi-directory=/boot ${DISK}
@@ -31,7 +24,7 @@ THEME_NAME=CyberRe
 echo -e "Creating the theme directory..."
 mkdir -p "${THEME_DIR}/${THEME_NAME}"
 echo -e "Copying the theme..."
-cd ${HOME}/ArchTitus
+cd ${HOME}/automated-arch-install
 cp -a ${THEME_NAME}/* ${THEME_DIR}/${THEME_NAME}
 echo -e "Backing up Grub config..."
 cp -an /etc/default/grub /etc/default/grub.bak
@@ -47,18 +40,34 @@ echo -ne "
                     Enabling Login Display Manager
 -------------------------------------------------------------------------
 "
-systemctl enable sddm.service
-echo -ne "
--------------------------------------------------------------------------
-                    Setting up SDDM Theme
--------------------------------------------------------------------------
-"
-cat <<EOF > /etc/sddm.conf
-[Theme]
-Current=Nordic
-EOF
+systemctl enable lightdm.service
 
 echo -ne "
+-------------------------------------------------------------------------
+                    Setting up LightDM Theme
+-------------------------------------------------------------------------
+"
+cd ~
+# If you prefer the last stable release, download from the releases page instead: https://github.com/NoiSek/Aether/releases/latest
+git clone git@github.com:NoiSek/Aether.git
+mv --recursive Aether /usr/share/lightdm-webkit/themes/Aether
+
+# Set default lightdm-webkit2-greeter theme to Aether
+sed -i 's/^webkit_theme\s*=\s*\(.*\)/webkit_theme = Aether #\1/g' /etc/lightdm/lightdm-webkit2-greeter.conf
+
+# Set default lightdm greeter to lightdm-webkit2-greeter
+sed -i 's/^\(#?greeter\)-session\s*=\s*\(.*\)/greeter-session = lightdm-webkit2-greeter #\1/ #\2g' /etc/lightdm/lightdm.conf
+
+
+echo -ne "
+
+-------------------------------------------------------------------------
+                Setting configuration for window manager
+-------------------------------------------------------------------------
+"
+
+echo -ne "
+
 -------------------------------------------------------------------------
                     Enabling Essential Services
 -------------------------------------------------------------------------
@@ -80,8 +89,8 @@ sed -i 's/^%wheel ALL=(ALL) NOPASSWD: ALL/# %wheel ALL=(ALL) NOPASSWD: ALL/' /et
 # Add sudo rights
 sed -i 's/^# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
 
-rm -r /root/ArchTitus
-rm -r /home/$USERNAME/ArchTitus
+rm -r /root/automated-arch-install
+rm -r /home/$USERNAME/automated-arch-install
 
 # Replace in the same state
 cd $pwd

@@ -1,18 +1,11 @@
 #!/usr/bin/env bash
 echo -ne "
 -------------------------------------------------------------------------
-   █████╗ ██████╗  ██████╗██╗  ██╗████████╗██╗████████╗██╗   ██╗███████╗
-  ██╔══██╗██╔══██╗██╔════╝██║  ██║╚══██╔══╝██║╚══██╔══╝██║   ██║██╔════╝
-  ███████║██████╔╝██║     ███████║   ██║   ██║   ██║   ██║   ██║███████╗
-  ██╔══██║██╔══██╗██║     ██╔══██║   ██║   ██║   ██║   ██║   ██║╚════██║
-  ██║  ██║██║  ██║╚██████╗██║  ██║   ██║   ██║   ██║   ╚██████╔╝███████║
-  ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝   ╚═╝   ╚═╝   ╚═╝    ╚═════╝ ╚══════╝
--------------------------------------------------------------------------
                     Automated Arch Linux Installer
-                        SCRIPTHOME: ArchTitus
+                        SCRIPTHOME: automated-arch-install
 -------------------------------------------------------------------------
 "
-source /root/ArchTitus/setup.conf
+source /root/automated-arch-install/setup.conf
 echo -ne "
 -------------------------------------------------------------------------
                     Network Setup 
@@ -47,11 +40,11 @@ echo -ne "
                     Setup Language to US and set locale  
 -------------------------------------------------------------------------
 "
-sed -i 's/^#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+sed -i 's/^#en_AU.UTF-8 UTF-8/en_AU.UTF-8 UTF-8/' /etc/locale.gen
 locale-gen
 timedatectl --no-ask-password set-timezone ${TIMEZONE}
 timedatectl --no-ask-password set-ntp 1
-localectl --no-ask-password set-locale LANG="en_US.UTF-8" LC_TIME="en_US.UTF-8"
+localectl --no-ask-password set-locale LANG="en_AU.UTF-8" LC_TIME="en_AU.UTF-8"
 
 # Set keymaps
 localectl --no-ask-password set-keymap ${KEYMAP}
@@ -71,7 +64,7 @@ echo -ne "
                     Installing Base System  
 -------------------------------------------------------------------------
 "
-cat /root/ArchTitus/pkg-files/pacman-pkgs.txt | while read line 
+cat /root/automated-arch-install/pkg-files/pacman-pkgs.txt | while read line 
 do
     echo "INSTALLING: ${line}"
    sudo pacman -S --noconfirm --needed ${line}
@@ -111,7 +104,7 @@ elif grep -E "Intel Corporation UHD" <<< ${gpu_type}; then
     pacman -S libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel libva-intel-driver libva-utils lib32-mesa --needed --noconfirm
 fi
 #SETUP IS WRONG THIS IS RUN
-if ! source /root/ArchTitus/setup.conf; then
+if ! source /root/automated-arch-install/setup.conf; then
 	# Loop through user input until the user gives a valid username
 	while true
 	do 
@@ -125,11 +118,11 @@ if ! source /root/ArchTitus/setup.conf; then
 		echo "Incorrect username."
 	done 
 # convert name to lowercase before saving to setup.conf
-echo "username=${username,,}" >> ${HOME}/ArchTitus/setup.conf
+echo "username=${username,,}" >> ${HOME}/automated-arch-install/setup.conf
 
     #Set Password
     read -p "Please enter password:" password
-echo "password=${password,,}" >> ${HOME}/ArchTitus/setup.conf
+echo "password=${password,,}" >> ${HOME}/automated-arch-install/setup.conf
 
     # Loop through user input until the user gives a valid hostname, but allow the user to force save 
 	while true
@@ -148,7 +141,7 @@ echo "password=${password,,}" >> ${HOME}/ArchTitus/setup.conf
 		fi 
 	done 
 
-    echo "nameofmachine=${nameofmachine,,}" >> ${HOME}/ArchTitus/setup.conf
+    echo "nameofmachine=${nameofmachine,,}" >> ${HOME}/automated-arch-install/setup.conf
 fi
 echo -ne "
 -------------------------------------------------------------------------
@@ -161,8 +154,8 @@ if [ $(whoami) = "root"  ]; then
 
 # use chpasswd to enter $USERNAME:$password
     echo "$USERNAME:$PASSWORD" | chpasswd
-	cp -R /root/ArchTitus /home/$USERNAME/
-    chown -R $USERNAME: /home/$USERNAME/ArchTitus
+	cp -R /root/automated-arch-install /home/$USERNAME/
+    chown -R $USERNAME: /home/$USERNAME/automated-arch-install
 # enter $nameofmachine to /etc/hostname
 	echo $nameofmachine > /etc/hostname
 else
