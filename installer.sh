@@ -12,9 +12,9 @@ echo -ne "
     bash startup.sh
     source $SCRIPT_DIR/setup.conf
     bash 0-preinstall.sh
-    arch-chroot /mnt /root/automated-arch-installer/1-setup.sh
-    arch-chroot /mnt /usr/bin/runuser -u $USERNAME -- /home/$USERNAME/automated-arch-installer/2-user.sh
-    arch-chroot /mnt /root/automated-arch-installer/3-post-setup.sh
+    arch-chroot /mnt /root/automated-arch-install/1-setup.sh
+    arch-chroot /mnt /usr/bin/runuser -u $USERNAME -- /home/$USERNAME/automated-arch-install/2-user.sh
+    arch-chroot /mnt /root/automated-arch-install/3-post-setup.sh
 
 echo -ne "
 -------------------------------------------------------------------------
