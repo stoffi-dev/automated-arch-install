@@ -53,7 +53,7 @@ lsof
 lzop
 lightdm
 lightdm-greeter
-lightdm-webkit2
+lightdm-webkit2-greeter
 m4
 make
 milou

@@ -49,10 +49,13 @@ echo -ne "
 "
 cd ~
 # If you prefer the last stable release, download from the releases page instead: https://github.com/NoiSek/Aether/releases/latest
-git clone git@github.com:NoiSek/Aether.git
+echo "Downloading Aether theme"
+git clone https://github.com/NoiSek/Aether
+echo "Creating directory for themes"
 mkdir /usr/share/lightdm-webkit/
 mkdir /usr/share/lightdm-webkit/themes
 mkdir /usr/share/lightdm-webkit/themes/Aether
+echo "Moving theme into directory"
 mv --recursive Aether /usr/share/lightdm-webkit/themes/Aether
 
 # Set default lightdm-webkit2-greeter theme to Aether
@@ -61,6 +64,7 @@ sed -i 's/^webkit_theme\s*=\s*\(.*\)/webkit_theme = Aether #\1/g' /etc/lightdm/l
 # Set default lightdm greeter to lightdm-webkit2-greeter
 sed -i 's/^\(#?greeter\)-session\s*=\s*\(.*\)/greeter-session = lightdm-webkit2-greeter #\1/ #\2g' /etc/lightdm/lightdm.conf
 
+echo "Updated lightdm conf files with new greeter"
 
 echo -ne "
 
