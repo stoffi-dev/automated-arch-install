@@ -50,6 +50,9 @@ echo -ne "
 cd ~
 # If you prefer the last stable release, download from the releases page instead: https://github.com/NoiSek/Aether/releases/latest
 git clone git@github.com:NoiSek/Aether.git
+mkdir /usr/share/lightdm-webkit/
+mkdir /usr/share/lightdm-webkit/themes
+mkdir /usr/share/lightdm-webkit/themes/Aether
 mv --recursive Aether /usr/share/lightdm-webkit/themes/Aether
 
 # Set default lightdm-webkit2-greeter theme to Aether
