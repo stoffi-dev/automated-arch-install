@@ -12,8 +12,11 @@ Personal arch install script
         - Terminal          | mod + enter
         - File explorer     | mod + f
 
-    Themes
-        Mayu-Dark
+    Themes ~/.themes
+        Nordic
+
+    Icon theme ~/.icons
+        Nordic-cursors
 
 ## LightDM configuration
 
