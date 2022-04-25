@@ -5,7 +5,7 @@ setfont ter-v22b
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 echo -ne "
 -------------------------------------------------------------------------
-                    Automated Arch Linux Installer
+1                    Automated Arch Linux Installer
 -------------------------------------------------------------------------
             Scripts are in directory automated-arch-installer
 "
