@@ -23,11 +23,7 @@ bluez-libs
 bluez-utils
 bridge-utils
 btrfs-progs
-celluloid
-cronie
 cups
-dialog
-dolphin
 dmenu
 dtc
 efibootmgr
@@ -64,7 +60,6 @@ ntp
 nvim
 openbsd-netcat
 openssh
-p7zip
 pacman-contrib
 patch
 pkgconf

@@ -9,12 +9,12 @@ echo -ne "
 -------------------------------------------------------------------------
             Scripts are in directory automated-arch-installer
 "
-    bash startup.sh
+    bash scripts/startup.sh
     source $SCRIPT_DIR/setup.conf
-    bash 0-preinstall.sh
-    arch-chroot /mnt /root/automated-arch-install/1-setup.sh
-    arch-chroot /mnt /usr/bin/runuser -u $USERNAME -- /home/$USERNAME/automated-arch-install/2-user.sh
-    arch-chroot /mnt /root/automated-arch-install/3-post-setup.sh
+    bash scripts/0-preinstall.sh
+    arch-chroot /mnt /root/automated-arch-install/scripts/1-setup.sh
+    arch-chroot /mnt /usr/bin/runuser -u $USERNAME -- /home/$USERNAME/automated-arch-install/scripts/2-user.sh
+    arch-chroot /mnt /root/automated-arch-install/scripts/3-post-setup.sh
 
 echo -ne "
 -------------------------------------------------------------------------
