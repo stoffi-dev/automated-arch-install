@@ -2,7 +2,7 @@
 echo -ne "
 -------------------------------------------------------------------------
                     Automated Arch Linux Installer
-                        SCRIPTHOME: automated-arch-install
+                  SCRIPTHOME: automated-arch-install
 -------------------------------------------------------------------------
 "
 source /root/automated-arch-install/setup.conf
